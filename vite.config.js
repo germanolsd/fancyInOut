@@ -13,5 +13,20 @@ export default defineConfig({
     alias: {
       '@': path.resolve(__dirname, '/src')
     }
+  },
+  build: {
+    lib: {
+      entry: path.resolve(__dirname, 'src/entry/index.js'),
+      name: 'FancyInOut',
+      fileName: 'index'
+    },
+    rollupOptions: {
+      external: ['vue'],
+      output: {
+        globals: {
+          vue: 'Vue'
+        }
+      }
+    }
   }
 })

@@ -9,6 +9,19 @@ const namedCurves = {
   materialEasing: [0.4, 0.0, 0.2, 1]
 }
 
+/**
+ * Applies fancy in and out animations to an HTML element.
+ * @param {Object} options - The animation options.
+ * @param {string} [options.x='150px'] - The x-coordinate of the final position.
+ * @param {string} [options.y='150px'] - The y-coordinate of the final position.
+ * @param {number} [options.angle=90] - The angle of rotation in degrees.
+ * @param {number} [options.duration=400] - The duration of the animation in milliseconds.
+ * @param {number} [options.initialScale=0.3] - The initial scale of the element.
+ * @param {number} [options.initialOpacity=0.1] - The initial opacity of the element.
+ * @param {string|number[]} [options.cubicBezier='easeInOut'] - The cubic bezier curve for easing.
+ * @returns {Promise<Object>} - A promise that resolves to an object containing the animation triggers.
+ * @throws {Error} - If the cubicBezier value is invalid.
+ */
 const fancyInOut = async (options = {}) => {
   const {
     x = '150px',
@@ -50,6 +63,10 @@ const fancyInOut = async (options = {}) => {
   element.style.transform = `translate(${x}, ${y})`;
 
   // Request a single animation frame to ensure element is rendered at the new position
+  /**
+   * Generates animation triggers for a given element.
+   * @returns {Promise<{triggerEnter: Function, triggerLeave: Function}>} A promise that resolves to an object containing triggerEnter and triggerLeave functions.
+   */
   const generateAnimationTriggers = () => {
     return new Promise((resolve) => {
       requestAnimationFrame(() => {
@@ -77,6 +94,15 @@ const fancyInOut = async (options = {}) => {
   return {triggerEnter, triggerLeave}
 }
 
+/**
+ * Creates an animation curve interpolator function.
+ *
+ * @param {number} delta - The delta value.
+ * @param {number} angle - The angle value.
+ * @param {number} initialScale - The initial scale value.
+ * @param {number} initialOpacity - The initial opacity value.
+ * @returns {Function} The animation curve interpolator function.
+ */
 const createAnimationCurveInterpolator = (delta, angle, initialScale, initialOpacity) => (progressValue) => {
   let x, y;
   if (angle === 0) {
@@ -98,12 +124,24 @@ const createAnimationCurveInterpolator = (delta, angle, initialScale, initialOpa
     x, y, scale, opacity
   ]
 }
+/**
+ * Interpolates a line based on a delta and progress value.
+ * @param {number[]} delta - The delta values for the line.
+ * @param {number} progress - The progress value for the interpolation.
+ * @returns {number[]} The interpolated line coordinates.
+ */
 export function interpolateLine(delta, progress) {
   const x = delta[0] * (1 - progress) * progress;
   const y = delta[1] * (1 - progress) * progress;
   return [x, y];
 }
 
+/**
+ * Generates a curve interpolator function that calculates the points along a curve.
+ * @param {number[]} initialCoords - The initial coordinates of the curve.
+ * @param {number} angle - The angle of the curve in degrees.
+ * @returns {Function} - The curve interpolator function.
+ */
 function generateCurveInterpolator(initialCoords, angle) {
   const midpoint = [initialCoords[0] / 2, initialCoords[1] / 2]
   const animationAnchorPoint = findAnchorPoint(midpoint, angle/2)
@@ -130,6 +168,13 @@ function generateCurveInterpolator(initialCoords, angle) {
   return progress
 }
 
+/**
+ * Calculates the coordinates of an anchor point based on a given midpoint and anchor point angle.
+ *
+ * @param {number[]} midpoint - The coordinates of the midpoint.
+ * @param {number} anchorPointAngle - The angle of the anchor point in degrees.
+ * @returns {number[]} The coordinates of the anchor point.
+ */
 function findAnchorPoint(midpoint, anchorPointAngle) {
   const originRad = (90 - anchorPointAngle) * Math.PI / 180 // angle at originPoint in radians
   // Calculate midpointDistance
@@ -152,6 +197,15 @@ function findAnchorPoint(midpoint, anchorPointAngle) {
   return anchorCoords
 }
 
+/**
+ * Generates triggers for animating an element.
+ *
+ * @param {number} duration - The duration of the animation in milliseconds.
+ * @param {Function} animationCurve - The animation curve function.
+ * @param {number[]} cubicBezier - The cubic bezier values.
+ * @param {boolean} isForward - Indicates whether the animation is forward or backward.
+ * @returns {Function} - The trigger function.
+ */
 const generateTriggers = (duration, animationCurve, cubicBezier, isForward) => (el, doneCallback) => {
     const startTime = performance.now();
     const bezierEasing = BezierEasing(...cubicBezier)
@@ -161,9 +215,8 @@ const generateTriggers = (duration, animationCurve, cubicBezier, isForward) => (
       const progress = isForward ? Math.min(elapsedTime / duration, 1) : Math.max(1 - elapsedTime / duration, 0);
       const [x, y, scale, alpha] = animationCurve(bezierEasing(progress));
   
-      el.style.transform = `translate(${x}px, ${y}px)`;
+      el.style.transform = `translate(${x}px, ${y}px) scale(${scale})`;
       el.style.opacity = alpha
-      el.style.scale = scale
   
       if (isForward && progress < 1 || !isForward && progress > 0) {
         requestAnimationFrame(animate);

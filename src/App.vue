@@ -67,6 +67,12 @@ body {
   --color-border-disabled: hsl(0, 0%, 20%);
 }
 
+input {
+  background-color: var(--color-background-primary);
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-background-secondary);
+}
+
 button {
   background-color: var(--color-accent);
   border: 2px solid var(--color-accent-darker);

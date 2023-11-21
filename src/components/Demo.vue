@@ -41,7 +41,7 @@
         :cubicBezier="cubicBezier"
         :initialOpacity="initialOpacity"
         :initialScale="initialScale"
-        :duration="dur"
+        :duration="duration"
       >
         <div v-if="showEl" class="round"></div>
       </FancyInOut>
@@ -111,5 +111,12 @@ const toggle = () => {
   display: grid;
   grid-template-columns: max-content 1fr;
   column-gap: 1rem;
+  margin-bottom: 2rem;
+}
+label {
+  text-align: right;
+}
+label:after {
+  content: ":";
 }
 </style>

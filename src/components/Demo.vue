@@ -34,6 +34,7 @@
         <label for="duration">Duration</label>
         <input id="duration" type="number" v-model="duration" />
       </div>
+      <CubicBezierSelector @selected="(v) => cubicBezier = v" />
       <FancyInOut
         :x="x"
         :y="y"
@@ -52,6 +53,7 @@
 <script setup>
 import { ref } from "vue";
 import FancyInOut from "@/components/FancyInOut.vue";
+import CubicBezierSelector from "./CubicBezierSelector.vue";
 
 const x = ref("150px");
 const y = ref("150px");
@@ -96,15 +98,6 @@ const toggle = () => {
   background-color: var(--color-accent);
 
   filter: drop-shadow(var(--subtle-drop-shadow));
-}
-
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.3s ease;
-}
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
 }
 
 .inputs {

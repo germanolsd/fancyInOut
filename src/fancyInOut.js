@@ -192,9 +192,7 @@ function findAnchorPoint(midpoint, anchorPointAngle) {
   // Multiply this unit vector by the length of the side from origin to anchor to get the vector from origin to anchor
   const vectorOriginToAnchor = [unitVectorOriginToAnchor[0] * hipotenuse, unitVectorOriginToAnchor[1] * hipotenuse]
   // Add this vector to the coordinates of origin to get the coordinates of anchor
-  const anchorCoords = [Math.round(vectorOriginToAnchor[0]), Math.round(vectorOriginToAnchor[1])]
-
-  return anchorCoords
+  return [Math.round(vectorOriginToAnchor[0]), Math.round(vectorOriginToAnchor[1])]
 }
 
 /**

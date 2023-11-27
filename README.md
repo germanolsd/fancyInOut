@@ -7,7 +7,7 @@ The animations are rendered in plain JS with requestAnimationFrame
 
 The vue component is a small wrapper that uses the standard vue \<Transition \/\> component and hooks the enter and leave animations with vue's conditional rendering
 
-Using with vanilla JS
+Using with vanilla JS (or TS):
 ```js
 import {fancyInOut} from 'FancyInOut'
 
@@ -19,6 +19,7 @@ triggerEnter(el, callback?) //triggers the enter animation
 triggerLeave(el, callback?) //triggers the leave animation
 ```
 
+Usage with Vue.
 ```
 //template
 <FancyInOutVue>
@@ -27,7 +28,10 @@ triggerLeave(el, callback?) //triggers the leave animation
 
 //script
 import {FancyInOutVue} from 'FancyInOut'
+// no need to import anything else
 ```
+
+Integration with other frameworks such as react or svelte can be done right now using the JS api, and native wrappers for those are coming in the next update.
 
 callbacks are called whenever the enter or leave animation ends
 

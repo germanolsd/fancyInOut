@@ -1,6 +1,6 @@
 {
   "name": "fancyinout",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "type": "module",
   "main": "dist/index.js",
   "files": [
@@ -8,7 +8,8 @@
   ],
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build:npm": "vite build --mode npm",
+    "build:deploy": "vite build --mode deploy",
     "preview": "vite preview",
     "test": "vitest",
     "test:watch": "vitest --watch"

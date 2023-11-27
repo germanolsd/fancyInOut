@@ -5,7 +5,9 @@ It exports a vanilla JS handler and a vue.js component.
 
 The animations are rendered in plain JS with requestAnimationFrame
 
-The vue component is a small wrapper that uses the standard vue \<Transition \/\> component and hooks the enter and leave animations with vue's conditional rendering
+The vue component is a small wrapper that uses the standard vue \<Transition \/\> component and hooks the enter and leave animations with vue's conditional rendering, it accepts every option parameter as a component prop.
+
+>live demo: https://majestic-rabanadas-875b9b.netlify.app/
 
 Using with vanilla JS (or TS):
 ```js
@@ -31,9 +33,12 @@ import {FancyInOutVue} from 'FancyInOut'
 // no need to import anything else
 ```
 
-Integration with other frameworks such as react or svelte can be done right now using the JS api, and native wrappers for those are coming in the next update.
+Integration with other frameworks such as react or svelte can be done right now using the JS api. 
 
-callbacks are called whenever the enter or leave animation ends
+Native wrappers for those are coming in the next update.
+
+
+### Options object params 
 
 | Option           | Description                                      | Default Value | Type | Values
 | -------          | -----------                                      | ------------- | ---- | ------

@@ -15,7 +15,7 @@ jobs:
           node-version: '18'
           registry-url: 'https://registry.npmjs.org/'
       - run: npm ci
-      - run: npm run build:npm # remove this line if no build script present
+      - run: npm run build:npm 
       - name: Check version
         id: check-version
         run: |

@@ -22,7 +22,7 @@ export default defineConfig({
     },
     rollupOptions: {
       external: ['vue'],
-      input: process.env.MODE === 'npm' ? 'src/entry/index.js' : 'src/main.js',
+      input: process.env.MODE === 'npm' ? 'src/entry/index.js' : 'index.html',
       output: {
         dir: process.env.MODE === 'npm' ? 'dist/npm' : 'dist/deploy',
         format: 'es',
